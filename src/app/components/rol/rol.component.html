@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="offset-md-3 col-md-3">
+      <h2 class="h1 font-weight-bold text-center py-3">Resgistrar rol</h2>
+      <form #registrarRolForm="ngForm" (ngSubmit)="guardarRol(registrarRolForm)">
+        <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]= "rolService.rolSeleccionado._id">
+        <div class="form-group col-md-8 pl-0">
+          <label class="font-weight-bold">Nombre del rol</label>
+          <input type="text" class="form-control" name="name" #name="ngModel" [(ngModel)] = "rolService.rolSeleccionado.name" required>
+          <span *ngIf="!name.valid && name.touched">!El nombre de rol es obligatorio!</span>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!registrarRolForm.form.valid">{{ opcionBoton }}</button>
+      </form>
+    </div>
+    <div class="col-md-3">
+      <h2 class="h1 font-weight-bold text-center py-3">Listado de roles</h2>
+      <table class="table">
+        <thead class="bg-primary">
+          <tr>
+            <th scope="col" class="text-white">Nombre</th>
+            <th scope="col" class="text-white">Operaciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rol of rolService.roles">
+            <td>{{rol.name}}</td>
+            <td>
+              <a class="btn btn-outline-primary mr-2" (click)="editarRol(rol)"><i class="far fa-edit text-warning"></i></a>
+              <a class="btn btn-outline-primary" (click)="eliminarRol(rol._id)"><i class="far fa-trash-alt text-danger"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
