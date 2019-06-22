@@ -1,0 +1,84 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="offset-md-2 col-md-4">
+      <h2 class="h1 font-weight-bold text-center py-3">Registrar Permiso</h2>
+      <form #registrarPermisoForm="ngForm" (ngSubmit)="guardarPermiso(registrarPermisoForm)">
+        <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="permisoService.permisoSeleccionado._id">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label class="font-weight-bold">Día</label>
+            <select name="day" class="form-control" #day="ngModel" [(ngModel)]="permisoService.permisoSeleccionado.day">
+              <option value="value1">Lunes</option>
+              <option value="value2">Martes</option>
+              <option value="value3">Miercoles</option>
+              <option value="value4">Jueves</option>
+              <option value="value5">Viernes</option>
+              <option value="value6">Sabado</option>
+              <option value="value7">Domingo</option>
+            </select>
+            <span *ngIf="!day.valid && day.touched">!El ingreso del día es obligatorio¡</span>
+          </div>
+          <div class="form-group col-md-6">
+            <label class="font-weight-bold">Tiempo de inicio</label>
+            <input name="start_time" type="time" placeholder="hh:mm" class="form-control time" #start_time="ngModel" [(ngModel)]="permisoService.permisoSeleccionado.start_time" rows="3" required>
+            <span *ngIf="!start_time.valid && start_time.touched">!La descripción del tiempo de inicio es obligatorio¡</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+          <label class="font-weight-bold">Tiempo de Finalización</label>
+          <input name="end_time" type="time" placeholder="hh:mm" class="form-control time" #end_time="ngModel" [(ngModel)]="permisoService.permisoSeleccionado.end_time" rows="3" required>
+          <span *ngIf="!end_time.valid && end_time.touched">!La descripción del tiempo de finalización es obligatorio¡</span>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="font-weight-bold">Rol</label>
+          <select name="rol" class="form-control" #rol="ngModel" [(ngModel)]="permisoService.permisoSeleccionado.rol">
+            <option *ngFor="let rol of rolService.roles" value="{{rol._id}}">{{rol.name}}</option>
+          </select>
+          <span *ngIf="!rol.valid && rol.touched">!Debes seleccionar un Rol!</span>
+        </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+          <label class="font-weight-bold">Estado</label>
+          <input name="state" class="form-control" #state="ngModel" [(ngModel)]="permisoService.permisoSeleccionado.state" rows="3" required>
+          <span *ngIf="!state.valid && state.touched">!El campo estado es obligatorio¡</span>
+        </div>
+      </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!registrarPermisoForm.form.valid">{{ opcionBoton }}</button>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <h2 class="h1 font-weight-bold text-center py-3">Listado de Permisos</h2>
+      <table class="table">
+        <thead class="bg-primary">
+          <tr>
+            <th scope="col" class="text-white">Id</th>
+            <th scope="col" class="text-white">Dia</th>
+            <th scope="col" class="text-white">Entrada</th>
+            <th scope="col" class="text-white">Salida</th>
+            <th scope="col" class="text-white">Rol</th>
+            <th scope="col" class="text-white">Estado</th>
+            <th scope="col" class="text-white">Operaciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let permiso of permisoService.permisos">
+            <td>{{ permiso._id }}</td>
+            <td>{{ permiso.day }}</td>
+            <td>{{ permiso.start_time }}</td>
+            <td>{{ permiso.end_time }}</td>
+            <td>{{ permiso.rol }}</td>
+            <td>{{ permiso.state }}</td>
+            <td>
+              <a class="btn btn-outline-primary mr-2" (click)="editarPermiso(permiso)"><i class="far fa-edit text-warning"></i></a>
+              <a class="btn btn-outline-primary" (click)="eliminarPermiso(permiso._id)"><i class="far fa-trash-alt text-danger"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
