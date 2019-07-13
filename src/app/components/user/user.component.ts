@@ -42,4 +42,11 @@ export class UserComponent implements OnInit {
     }, error => console.log(error as any));
 
   }
+
+  eliminarUsuario(idUsuario: number) {
+    if (confirm('Estas seguro de eliminar este usuario?')) {
+        this.usuarioService.eliminarUsuario(this.token, idUsuario).subscribe(res => this.obtenerUsuarios(),
+        error => console.log(error as any));
+    }
+  }
 }
